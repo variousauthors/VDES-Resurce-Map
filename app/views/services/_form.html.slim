@@ -1,0 +1,10 @@
+= simple_form_for(@service) do |f|
+  = f.error_notification
+
+  .form-inputs
+
+  = button_tag(type: 'submit', class: 'btn btn-primary') do
+    = text_with_icon("#{btn_action_prefix} Service", action_icon_name)
+  '
+  = link_to text_with_icon('Back', 'chevron-left'), :back, class: 'btn btn-default'
+

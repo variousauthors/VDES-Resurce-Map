@@ -1,6 +1,7 @@
 GSWS204::Application.routes.draw do
 
-  root to: 'pages#root'
+  resources :services
+  root to: 'services#index'
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
 

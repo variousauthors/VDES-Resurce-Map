@@ -19,6 +19,8 @@ gem 'autoprefixer-rails'
 
 gem 'awesome_print'
 
+gem 'acts-as-taggable-on', '~> 3.4'
+
 group :production, :acceptance do
   gem 'rack-timeout'
   gem 'rails_stdout_logging'
