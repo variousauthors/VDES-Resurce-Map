@@ -2,6 +2,13 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :name
+    = f.input :category, collection: Category.all, prompt: "Select a Category"
+    = f.input :tag_list, value: @service.tag_list.to_s
+
+    = f.simple_fields_for :locations do |l|
+      = l.input :address
+      = l.input :phone, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999"  }
 
   = button_tag(type: 'submit', class: 'btn btn-primary') do
     = text_with_icon("#{btn_action_prefix} Service", action_icon_name)

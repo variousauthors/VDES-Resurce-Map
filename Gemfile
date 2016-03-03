@@ -20,6 +20,7 @@ gem 'autoprefixer-rails'
 gem 'awesome_print'
 
 gem 'acts-as-taggable-on', '~> 3.4'
+gem 'jasny-bootstrap-rails' # for bootstrap-inputmask
 
 group :production, :acceptance do
   gem 'rack-timeout'
