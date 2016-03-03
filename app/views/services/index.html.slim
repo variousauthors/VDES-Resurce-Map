@@ -5,13 +5,19 @@ table.table.table-striped.table-hover
   thead
     tr
       th ID
+      th Address
+      th Phone
+      th Tags
       th Actions
 
   tbody
     - @services.each do |service|
       tr
         /td= link_to_if can?(:show, service), service.id, service_path(service)
-        td= link_to service.id, service_path(service)
+        td= link_to service.name, service_path(service)
+        td= service.address
+        td= service.phone
+        td= service.tag_list
         td
           /- if can? :edit, service
           = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'
