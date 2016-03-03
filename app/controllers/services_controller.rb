@@ -16,7 +16,10 @@ class ServicesController < ApplicationController
   end
 
   def create
+    locations = params[:service].delete(:locations)
     @service = Service.new(service_params)
+
+    # TODO if the location has changed, create a new location for the service
 
     if @service.save
       redirect_to @service, notice: 'Service was successfully created.'
@@ -46,6 +49,6 @@ class ServicesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def service_params
-      params[:service]
+      params[:service].permit(:name, :category, :tag_list)
     end
 end

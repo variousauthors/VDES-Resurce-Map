@@ -3,10 +3,10 @@
 
   .form-inputs
     = f.input :name
-    = f.input :category, collection: Category.all, prompt: "Select a Category"
+    = f.association :category, collection: Category.all, prompt: "Select a Category"
     = f.input :tag_list, value: @service.tag_list.to_s
 
-    = f.simple_fields_for :locations do |l|
+    = f.simple_fields_for :location do |l|
       = l.input :address
       = l.input :phone, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999"  }
 
