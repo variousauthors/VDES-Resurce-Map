@@ -21,8 +21,7 @@ class ServicesController < ApplicationController
     location = params[:service].delete(:location)
     @service = Service.new(service_params)
 
-    # TODO if the location has changed, create a new location for the service
-    @service.locations << Location.create(location.permit(:address, :phone))
+    @service.location = Location.create(location.permit(:address, :phone))
 
     if @service.save
       redirect_to @service, notice: 'Service was successfully created.'
@@ -32,6 +31,11 @@ class ServicesController < ApplicationController
   end
 
   def update
+    location = params[:service].delete(:location)
+    @service = Service.with_location.find(params[:id])
+
+    @service.location = Location.create(location.permit(:address, :phone))
+
     if @service.update(service_params)
       redirect_to @service, notice: 'Service was successfully updated.'
     else

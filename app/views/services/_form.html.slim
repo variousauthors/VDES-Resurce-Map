@@ -10,8 +10,8 @@
     = f.input :tag_list, value: @service.tag_list.to_s
 
     = f.simple_fields_for :location do |l|
-      = l.input :address, input_html: { value: @service.address }
-      = l.input :phone, input_html: { :maxlength => 14, :"data-mask" => "999-999-9999", value: @service.phone }
+      = l.input :address, input_html: { value: @service.has_attribute?(:address)? @service.address : nil }
+      = l.input :phone, input_html: { :maxlength => 14, :"data-mask" => "999-999-9999", value: @service.has_attribute?(:phone)? @service.phone : nil }
 
   - if buttons
     = button_tag(type: 'submit', class: 'btn btn-primary') do
