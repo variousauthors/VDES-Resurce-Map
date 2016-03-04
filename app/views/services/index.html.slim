@@ -4,9 +4,10 @@ div.page-header
 table.table.table-striped.table-hover
   thead
     tr
-      th ID
+      th Name
       th Address
       th Phone
+      th Category
       th Tags
       th Actions
 
@@ -17,7 +18,8 @@ table.table.table-striped.table-hover
         td= link_to service.name, service_path(service)
         td= service.address
         td= service.phone
-        td= service.tag_list
+        td= text_with_icon(service.category_name, category_icon_name(service.category_name))
+        td= service.tag_list.map {|tag| text_with_icon(tag, tag_icon_name(tag)) }.join(", ").html_safe
         td
           /- if can? :edit, service
           = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'

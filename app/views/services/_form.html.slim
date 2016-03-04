@@ -7,7 +7,7 @@
   .form-inputs
     = f.input :name
     = f.association :category, collection: Category.all, prompt: "Select a Category", selected: @service.category_id
-    = f.input :tag_list, value: @service.tag_list.to_s
+    = f.input :tag_list, input_html: { value: @service.tag_list.join(', ') }, label: "Tags (comma separated list)"
 
     = f.simple_fields_for :location do |l|
       = l.input :address, input_html: { value: @service.has_attribute?(:address)? @service.address : nil }

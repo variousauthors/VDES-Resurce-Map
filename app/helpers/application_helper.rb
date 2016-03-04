@@ -42,4 +42,27 @@ module ApplicationHelper
     "alert-#{alert_type}"
   end
 
+  def tag_icon_name(tag)
+    case tag.downcase
+    when 'shelter'
+      'home'
+    when 'health'
+      'plus'
+    when 'food'
+      'cutlery'
+    when 'showers'
+      'cloud'
+    end
+  end
+
+  def category_icon_name(category)
+    case category.downcase
+    when 'shelter'
+      'home'
+    when 'health'
+      'plus'
+    when 'food'
+      'cutlery'
+    end
+  end
 end

@@ -26,6 +26,21 @@ class Service < ActiveRecord::Base
         .and(l[:service_id].eq(s[:id]))).join_sources)
   }
 
+  scope :with_category_name, -> {
+    s = Service.arel_table
+    c = Category.arel_table
+
+    select(
+      Arel.star,
+      s[:id].as("id"),
+      s[:name].as("name"),
+      c[:name].as("category_name"),
+    ).joins(
+      s.join(c)
+      .on(
+        s[:category_id].eq(c[:id])).join_sources)
+  }
+
   def location=(loc)
     curr = self.location
 

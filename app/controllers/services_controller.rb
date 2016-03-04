@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
 
   def index
-    @services = Service.with_location.all
+    @services = Service.with_location.with_category_name.all
   end
 
   def show
