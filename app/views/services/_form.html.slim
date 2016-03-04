@@ -1,17 +1,21 @@
-= simple_form_for(@service) do |f|
+- disabled = local_assigns.fetch :disabled, {}
+- buttons = local_assigns.fetch :buttons, true
+
+= simple_form_for(@service, defaults: { disabled: disabled }) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :name
-    = f.association :category, collection: Category.all, prompt: "Select a Category"
+    = f.association :category, collection: Category.all, prompt: "Select a Category", selected: @service.category_id
     = f.input :tag_list, value: @service.tag_list.to_s
 
     = f.simple_fields_for :location do |l|
-      = l.input :address
-      = l.input :phone, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999"  }
+      = l.input :address, input_html: { value: @service.address }
+      = l.input :phone, input_html: { :maxlength => 14, :"data-mask" => "999-999-9999", value: @service.phone }
 
-  = button_tag(type: 'submit', class: 'btn btn-primary') do
-    = text_with_icon("#{btn_action_prefix} Service", action_icon_name)
-  '
-  = link_to text_with_icon('Back', 'chevron-left'), :back, class: 'btn btn-default'
+  - if buttons
+    = button_tag(type: 'submit', class: 'btn btn-primary') do
+      = text_with_icon("#{btn_action_prefix} Service", action_icon_name)
+    '
+    = link_to text_with_icon('Back', 'chevron-left'), :back, class: 'btn btn-default'
 

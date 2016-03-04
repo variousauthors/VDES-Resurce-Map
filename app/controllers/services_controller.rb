@@ -6,6 +6,7 @@ class ServicesController < ApplicationController
   end
 
   def show
+    @service = Service.with_location.find(params[:id])
   end
 
   def new
@@ -13,6 +14,7 @@ class ServicesController < ApplicationController
   end
 
   def edit
+    @service = Service.with_location.find(params[:id])
   end
 
   def create
@@ -50,6 +52,6 @@ class ServicesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def service_params
-      params.require(:service).permit(:name, :category, :tag_list)
+      params.require(:service).permit(:name, :category_id, :tag_list)
     end
 end

@@ -1,10 +1,12 @@
 class Service < ActiveRecord::Base
-  has_many :locations
+  has_many :locations, dependent: :destroy
   belongs_to :category
 
   acts_as_taggable
 
   accepts_nested_attributes_for :locations
+
+  validates :category, presence: true
 
   scope :with_location, -> {
     s = Service.arel_table
