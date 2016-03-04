@@ -10,15 +10,16 @@ class Service < ActiveRecord::Base
     s = Service.arel_table
     l = Location.arel_table
 
-    joins(s.project(
+    select(
       Arel.star,
       s[:id].as("id"),
       l[:address].as("address"),
-      l[:phone].as("phone"))
-    .join(l)
-    .on(
-      l[:current].eq(true)
-      .and(l[:service_id].eq(s[:id]))).join_sources)
+      l[:phone].as("phone")
+    ).joins(
+      s.join(l)
+      .on(
+        l[:current].eq(true)
+        .and(l[:service_id].eq(s[:id]))).join_sources)
   }
 
 end
