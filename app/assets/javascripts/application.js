@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require jasny-bootstrap.min
+//= require underscore
+//= require gmaps/google
 //= require_tree .

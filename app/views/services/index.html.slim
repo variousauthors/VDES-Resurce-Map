@@ -1,6 +1,9 @@
 div.page-header
   h1 Listing services
 
+.map-container
+  #map
+
 table.table.table-striped.table-hover
   thead
     tr
@@ -30,3 +33,13 @@ table.table.table-striped.table-hover
 
 /- if can? :create, Service
 = link_to text_with_icon('New Service', 'plus'), new_service_path, class: 'btn btn-primary'
+
+javascript:
+  handler = Gmaps.build('Google');
+  data = $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(data);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
+  })

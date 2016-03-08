@@ -57,7 +57,41 @@ class Service < ActiveRecord::Base
         s[:category_id].eq(c[:id])).join_sources)
   }
 
+  # returns lat,lon pair for each service
+  scope :geodata, -> {
+    s = Service.arel_table
+    l = Location.arel_table
+
+    # recent locations
+    x = l.project(
+      l[:service_id].as("xs_id"),
+      l[:created_at].maximum.as("created_at"))
+      .group(l[:service_id])
+      .as("X")
+
+    # subquery for join: 
+    y = l.project(
+      l[:latitude].as("lat"),
+      l[:longitude].as("lon"),
+      l[:id].as("id"), 
+      l[:service_id].as("ys_id"), 
+      x[:created_at].as("created_at"))
+      .join(x)
+      .on(x[:xs_id].eq(l[:service_id])
+      .and(x[:created_at].eq(l[:created_at])))
+      .as("Y")
+
+    select(
+      s[:id].as("id"),
+      y[:lat].as("lat"),
+      y[:lon].as("lng")
+    ).joins(
+      s.join(y)
+      .on(y[:ys_id].eq(s[:id])).join_sources)
+  }
+
   def current_location
     self.locations.last
   end
+
 end

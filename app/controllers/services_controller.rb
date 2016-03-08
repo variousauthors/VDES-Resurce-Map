@@ -3,7 +3,11 @@ class ServicesController < ApplicationController
   before_action :set_locations_attributes, only: [:create, :update]
 
   def index
-    @services = Service.with_location.with_category_name.all
+
+    respond_to do |format|
+      format.html { @services = Service.with_location.with_category_name.all }
+      format.json { render json: Service.geodata.to_json }
+    end
   end
 
   def show
