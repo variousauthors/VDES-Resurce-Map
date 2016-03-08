@@ -1,35 +1,36 @@
-div.page-header
-  h1 Listing services
+.row
+  .col-md-12
+    .map-container
+      #map
 
-.map-container
-  #map
+.row.overflow-y.scroll
+  .col-md-12
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Name
+          th Address
+          th Phone
+          th Category
+          th Tags
+          th Actions
 
-table.table.table-striped.table-hover
-  thead
-    tr
-      th Name
-      th Address
-      th Phone
-      th Category
-      th Tags
-      th Actions
-
-  tbody
-    - @services.each do |service|
-      tr
-        /td= link_to_if can?(:show, service), service.id, service_path(service)
-        td= link_to service.name, service_path(service)
-        td= service.address
-        td= service.phone
-        td= text_with_icon(service.category_name, category_icon_name(service.category_name))
-        td= service.tag_list.map {|tag| text_with_icon(tag, tag_icon_name(tag)) }.join(", ").html_safe
-        td
-          /- if can? :edit, service
-          = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'
-          '
-          /- if can? :destroy, service
-          = link_to text_with_icon('Destroy', 'remove'), service_path(service),
-                    method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default btn-xs btn-danger'
+      tbody
+        - @services.each do |service|
+          tr
+            /td= link_to_if can?(:show, service), service.id, service_path(service)
+            td= link_to service.name, service_path(service)
+            td= service.address
+            td= service.phone
+            td= text_with_icon(service.category_name, category_icon_name(service.category_name))
+            td= service.tag_list.map {|tag| text_with_icon(tag, tag_icon_name(tag)) }.join(", ").html_safe
+            td
+              /- if can? :edit, service
+              = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'
+              '
+              /- if can? :destroy, service
+              /- = link_to text_with_icon('Destroy', 'remove'), service_path(service),
+              /-          method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default btn-xs btn-danger'
 
 /- if can? :create, Service
 = link_to text_with_icon('New Service', 'plus'), new_service_path, class: 'btn btn-primary'

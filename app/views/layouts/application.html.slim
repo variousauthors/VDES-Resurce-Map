@@ -31,7 +31,7 @@ html
               / - else
               /  li= link_to text_with_icon('Sign In', 'log-in'), sign_in_path
 
-      .container
+      .container.full
         - flash.each do |name, msg|
           .alert.alert-dismissable class=alert_class(name)
             button.close type='button' data-dismiss='alert' aria-hidden='true' &times;
