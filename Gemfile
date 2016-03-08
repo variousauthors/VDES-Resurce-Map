@@ -24,6 +24,7 @@ gem 'jasny-bootstrap-rails' # for bootstrap-inputmask
 gem 'geocoder'
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'heroku'
 
 group :production, :acceptance do
   gem 'rack-timeout'
