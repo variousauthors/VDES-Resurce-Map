@@ -8,22 +8,38 @@ class Service < ActiveRecord::Base
 
   validates :category, presence: true
   validates :locations, presence: true
-  validate :unique_current_address
 
   scope :with_location, -> {
     s = Service.arel_table
     l = Location.arel_table
 
+    # recent locations
+    x = l.project(
+      l[:service_id].as("xs_id"),
+      l[:created_at].maximum.as("created_at"))
+      .group(l[:service_id])
+      .as("X")
+
+    # subquery for join: 
+    y = l.project(
+      l[:address].as("address"),
+      l[:phone].as("phone"),
+      l[:id].as("id"), 
+      l[:service_id].as("ys_id"), 
+      x[:created_at].as("created_at"))
+      .join(x)
+      .on(x[:xs_id].eq(l[:service_id])
+      .and(x[:created_at].eq(l[:created_at])))
+      .as("Y")
+
     select(
       Arel.star,
       s[:id].as("id"),
-      l[:address].as("address"),
-      l[:phone].as("phone")
+      y[:address].as("address"),
+      y[:phone].as("phone")
     ).joins(
-      s.join(l)
-      .on(
-        l[:current].eq(true)
-        .and(l[:service_id].eq(s[:id]))).join_sources)
+      s.join(y)
+      .on(y[:ys_id].eq(s[:id])).join_sources)
   }
 
   scope :with_category_name, -> {
