@@ -41,26 +41,7 @@ class Service < ActiveRecord::Base
         s[:category_id].eq(c[:id])).join_sources)
   }
 
-  def location=(loc)
-    curr = self.location
-
-    if curr.nil?
-      self.locations << loc
-    elsif curr.address != loc.address || curr.phone != loc.phone
-      curr.update_attributes(current: false)
-      self.locations << loc
-    end
+  def current_location
+    self.locations.last
   end
-
-  def location
-    self.locations.where(current: true).first
-  end
-
-  private
-    
-    def unique_current_address
-      if self.locations.where(current: true).count > 1
-        errors.add(:locations, 'More than one current location')
-      end
-    end
 end

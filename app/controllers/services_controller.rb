@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
   before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :set_locations_attributes, only: [:create, :update]
 
   def index
     @services = Service.with_location.with_category_name.all
@@ -11,6 +12,7 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
+    @service.locations.build
   end
 
   def edit
@@ -18,23 +20,17 @@ class ServicesController < ApplicationController
   end
 
   def create
-    location = params[:service].delete(:location)
     @service = Service.new(service_params)
-
-    @service.location = Location.create(location.permit(:address, :phone))
 
     if @service.save
       redirect_to @service, notice: 'Service was successfully created.'
     else
+      flash[:danger] = @service.errors.full_messages.to_sentence
       render :new
     end
   end
 
   def update
-    location = params[:service].delete(:location)
-    @service = Service.with_location.find(params[:id])
-
-    @service.location = Location.create(location.permit(:address, :phone))
 
     if @service.update(service_params)
       redirect_to @service, notice: 'Service was successfully updated.'
@@ -54,8 +50,12 @@ class ServicesController < ApplicationController
       @service = Service.find(params[:id])
     end
 
+    def set_locations_attributes
+      params[:service][:locations_attributes] = Array.wrap(params[:service].delete(:location))
+    end
+
     # Only allow a trusted parameter "white list" through.
     def service_params
-      params.require(:service).permit(:name, :category_id, :tag_list)
+      params.require(:service).permit(:id, :name, :category_id, :tag_list, locations_attributes: [:id, :address, :phone])
     end
 end
