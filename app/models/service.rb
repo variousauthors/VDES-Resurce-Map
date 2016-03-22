@@ -83,6 +83,7 @@ class Service < ActiveRecord::Base
 
     select(
       s[:id].as("id"),
+      s[:name].as("infowindow"),
       y[:lat].as("lat"),
       y[:lon].as("lng")
     ).joins(

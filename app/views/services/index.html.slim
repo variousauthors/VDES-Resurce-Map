@@ -17,7 +17,7 @@
 
       tbody
         - @services.each do |service|
-          tr
+          tr { data-id = service.id }
             /td= link_to_if can?(:show, service), service.id, service_path(service)
             td= link_to service.name, service_path(service)
             td= service.address
@@ -37,10 +37,28 @@
 
 javascript:
   handler = Gmaps.build('Google');
-  data = $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
+
+  $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      markers = handler.addMarkers(data);
+      var markers = [];
+
+      data.forEach(function (datum, index) {
+        var marker = handler.addMarker(datum),
+            id = datum.id;
+
+        markers.push(marker);
+
+        marker.getServiceObject().addListener("mouseover", function (point) { 
+          $("tr[data-id=" + id + "]").addClass("success");
+        });
+
+        marker.getServiceObject().addListener("mouseout", function (point) { 
+          $("tr[data-id=" + id + "]").removeClass("success");
+        });
+      });
+
       handler.bounds.extendWith(markers);
       handler.fitMapToBounds();
     });
+
   })
