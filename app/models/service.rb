@@ -95,4 +95,8 @@ class Service < ActiveRecord::Base
     self.locations.last
   end
 
+  def has_notes?
+    not self.notes.blank?
+  end
+
 end

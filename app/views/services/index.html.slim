@@ -19,7 +19,7 @@
         - @services.each do |service|
           tr { data-id = service.id }
             /td= link_to_if can?(:show, service), service.id, service_path(service)
-            td= link_to service.name, service_path(service)
+            td= link_to(service.name, service_path(service)) + "#{ " *" if service.has_notes? }"
             td= service.address
             td= service.phone
             td= text_with_icon(service.category_name, category_icon_name(service.category_name))
@@ -36,7 +36,7 @@
 = link_to text_with_icon('New Service', 'plus'), new_service_path, class: 'btn btn-primary'
 
 javascript:
-  handler = Gmaps.build('Google');
+  var handler = Gmaps.build('Google');
 
   $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){

@@ -13,6 +13,8 @@
       = l.input :address, input_html: { value: @service.has_attribute?(:address)? @service.address : nil }
       = l.input :phone, input_html: { :maxlength => 14, :"data-mask" => "999-999-9999", value: @service.has_attribute?(:phone)? @service.phone : nil }
 
+    = f.input :notes
+
   - if buttons
     = button_tag(type: 'submit', class: 'btn btn-primary') do
       = text_with_icon("#{btn_action_prefix} Service", action_icon_name)
