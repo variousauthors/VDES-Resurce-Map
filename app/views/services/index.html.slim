@@ -39,6 +39,7 @@ javascript:
   var handler = Gmaps.build('Google');
 
   $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
+
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
       var markers = [];
 
