@@ -2,6 +2,7 @@
 - buttons = local_assigns.fetch :buttons, true
 
 = simple_form_for(@service, defaults: { disabled: disabled }, validate: true) do |f|
+  = "Last Modified: #{ @service.modified_at }"
   = f.error_notification
 
   .form-inputs

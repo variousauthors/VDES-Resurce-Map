@@ -3,9 +3,8 @@ class ServicesController < ApplicationController
   before_action :set_locations_attributes, only: [:create, :update]
 
   def index
-
     respond_to do |format|
-      format.html { @services = Service.with_location.with_category_name.all }
+      format.html { @services = Service.with_location.with_category_name.sort_by(&:name) }
       format.json { render json: Service.geodata.to_json }
     end
   end
@@ -36,7 +35,14 @@ class ServicesController < ApplicationController
 
   def update
 
-    if @service.update(service_params)
+    # TODO also check if associations changed
+    @service.attributes = service_params
+    changed = @service.changed?
+
+    if @service.save
+
+      @service.update(modified_at: @service.updated_at) if changed
+
       redirect_to @service, notice: 'Service was successfully updated.'
     else
       render :edit
