@@ -18,4 +18,3 @@
 
 # Ignore compiled assets.
 /public/assets
-/config/secrets.yml
