@@ -28,3 +28,34 @@
     position: absolute;
     left: 0;
 }
+
+body#services.print {
+    padding: 0;
+}
+
+#services.print {
+    .map-container {
+        height: 100%;
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        @page  
+        { 
+            size: auto;   /* auto is the initial value */ 
+
+            /* this affects the margin in the printer settings */ 
+            margin: 25mm 25mm 25mm 25mm;  
+        } 
+
+        @media print {
+            img {
+                max-width: none !important;
+            }
+        }
+
+    }
+}
+

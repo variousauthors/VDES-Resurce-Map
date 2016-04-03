@@ -9,6 +9,12 @@ class ServicesController < ApplicationController
     end
   end
 
+  def print
+    @services = Service.with_location.with_category_name.sort_by(&:name)
+
+    render layout: "print"
+  end
+
   def show
     @service = Service.with_location.find(params[:id])
   end

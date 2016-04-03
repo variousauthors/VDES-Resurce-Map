@@ -33,7 +33,9 @@
               /-          method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-default btn-xs btn-danger'
 
 /- if can? :create, Service
-= link_to text_with_icon('New Service', 'plus'), new_service_path, class: 'btn btn-primary'
+.btn-toolbar
+  = link_to text_with_icon('New Service', 'plus'), new_service_path, class: 'btn btn-primary'
+  = link_to text_with_icon('Print', 'print'), print_services_path, class: 'm-l-1 btn btn-primary'
 
 javascript:
   var handler = Gmaps.build('Google');

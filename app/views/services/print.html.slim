@@ -1,0 +1,31 @@
+.map-container
+  #map
+
+javascript:
+  var handler = Gmaps.build('Google');
+
+  $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
+
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      var markers = [];
+
+      data.forEach(function (datum, index) {
+        var marker = handler.addMarker(datum),
+            id = datum.id;
+
+        markers.push(marker);
+
+        marker.getServiceObject().addListener("mouseover", function (point) { 
+          $("tr[data-id=" + id + "]").addClass("success");
+        });
+
+        marker.getServiceObject().addListener("mouseout", function (point) { 
+          $("tr[data-id=" + id + "]").removeClass("success");
+        });
+      });
+
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
+
+  })
