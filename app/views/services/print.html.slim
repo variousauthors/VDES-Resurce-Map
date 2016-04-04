@@ -4,15 +4,27 @@
 .row
   - index = 0
   - @columns.each do |column|
-    .col-md-4
+    .col-md-3
       - column.each do |category|
-        - category_name = category[0]
-        - services = category[1]
+        .service-category
+          - category_name = category[0]
+          - services = category[1]
 
-        h1
-          = category_name
-        - services.each do |service|
-          - index += 1
-          .service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
-            = link_to("#{ index }. #{ service.name }", service_path(service)) + "#{ " *" if service.has_notes? }"
+          h2
+            = category_name
+          - services.each do |service|
+            - index += 1
+            .row.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
+              .col-md-1
+                span
+                  = "#{ index }."
+              .col-md-7
+                div
+                  strong= service.name
+                div
+                  span= service.address
+              .col-md-4
+                span.nowrap
+                  = service.tag_list.map {|tag| image_tag("tags/#{ tag.parameterize.underscore }.jpg", class: "tag_icon", alt: tag, title: tag) }.join(" ").html_safe
+
 
