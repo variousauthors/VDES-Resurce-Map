@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def text_with_image(text, icon_name, html_class)
-    raw("#{image_tag("tags/#{ icon_name.parameterize.underscore }.jpg", class: html_class)} #{text}")
+    raw("#{image_tag("tags/#{ icon_name.parameterize.underscore }.jpg", class: html_class, alt: "")} #{text}")
   end
 
   # generate a standard bootstrap glyphicon
