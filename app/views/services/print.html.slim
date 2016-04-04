@@ -1,12 +1,18 @@
 .map-container
   #map
 
-- index = 0
-- @service_categories.each do |category_name, services|
-  h1
-    = category_name
-  - services.each do |service|
-    .service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
-      = link_to("#{ index + 1 }. #{ service.name }", service_path(service)) + "#{ " *" if service.has_notes? }"
+.row
+  - index = 0
+  - @columns.each do |column|
+    .col-md-4
+      - column.each do |category|
+        - category_name = category[0]
+        - services = category[1]
 
-  - index += 1
+        h1
+          = category_name
+        - services.each do |service|
+          - index += 1
+          .service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
+            = link_to("#{ index }. #{ service.name }", service_path(service)) + "#{ " *" if service.has_notes? }"
+

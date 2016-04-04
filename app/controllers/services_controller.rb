@@ -9,7 +9,18 @@ class ServicesController < ApplicationController
   end
 
   def print
-    @service_categories = Service.with_location.with_category_name.sort_by(&:name).group_by(&:category_name)
+    categories = Service.with_location.with_category_name.sort_by(&:name).group_by(&:category_name)
+    by_size = categories.map { |k,v| [v.size, k] }
+
+    # columns takes [[1, stuff...], [13, stuff...], [19, stuff], ...]
+    @columns = partition(by_size, 3)
+
+    @columns = @columns.map do |col|
+      col.map do |cat|
+        name = cat[1]
+        [name, categories[name]]
+      end
+    end
 
     render layout: "print"
   end
@@ -72,5 +83,24 @@ class ServicesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def service_params
       params.require(:service).permit(:id, :name, :notes, :category_id, :tag_list, locations_attributes: [:id, :address, :phone])
+    end
+
+    # data are tuples of the form [size, ...]
+    # and we'll partition them based on size
+    # returns tuples like [size, [size, ...], ...]
+    def partition(data, n)
+      parts = []
+      n.times { parts.push([0]) }
+
+      # the greedy method approximates a good partition
+      data.length.times do |i|
+        max = data.delete(data.max_by(&:first))
+
+        min = parts.min_by(&:first)
+        min[0] = min.first + max.first
+        min.push(max)
+      end
+
+      parts.map {|p| p[1, p.size - 1]}
     end
 end
