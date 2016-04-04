@@ -23,7 +23,7 @@
             td= service.address
             td= service.phone
             td= text_with_icon(service.category_name, category_icon_name(service.category_name))
-            td= service.tag_list.map {|tag| text_with_icon(tag, tag_icon_name(tag)) }.join(", ").html_safe
+            td= service.tag_list.map {|tag| text_with_image(tag, tag, "tag_icon") }.join(", ").html_safe
             td
               /- if can? :edit, service
               = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'

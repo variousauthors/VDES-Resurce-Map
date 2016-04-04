@@ -14,3 +14,5 @@ NEXTSTEPS
 [] little numbered icons
 [] need to provide masking for 1-800-999-9999 numbers
 
+[] map should center on DTES regardless of location of dots
+   - or map should not show dots outside of DTES

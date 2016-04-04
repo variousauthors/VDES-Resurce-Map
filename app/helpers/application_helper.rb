@@ -5,6 +5,10 @@ module ApplicationHelper
     raw("#{icon(icon_name)} #{text}")
   end
 
+  def text_with_image(text, icon_name, html_class)
+    raw("#{image_tag("tags/#{ icon_name.parameterize.underscore }.jpg", class: html_class)} #{text}")
+  end
+
   # generate a standard bootstrap glyphicon
   def icon(name)
     content_tag(:span, nil, class: "glyphicon glyphicon-#{name}")
