@@ -5,7 +5,6 @@ class ServicesController < ApplicationController
   def index
     respond_to do |format|
       format.html { @services = Service.with_location.with_category_name.sort_by(&:name) }
-      format.json { render json: Service.geodata.to_json }
     end
   end
 
