@@ -16,14 +16,16 @@
           th Actions
 
       tbody
-        - @services.each do |service|
-          tr { data-id = service.id }
+        - @services.each_with_index do |service, index|
+          tr.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
             /td= link_to_if can?(:show, service), service.id, service_path(service)
-            td= link_to(service.name, service_path(service)) + "#{ " *" if service.has_notes? }"
+            td= link_to("#{ index + 1 }. #{ service.name }", service_path(service)) + "#{ " *" if service.has_notes? }"
             td= service.address
             td= service.phone
             td= text_with_icon(service.category_name, category_icon_name(service.category_name))
-            td= service.tag_list.map {|tag| text_with_image(tag, tag, "tag_icon") }.join(", ").html_safe
+            td
+              span.nowrap
+                = service.tag_list.map {|tag| image_tag("tags/#{ tag.parameterize.underscore }.jpg", class: "tag_icon", alt: tag, title: tag) }.join(" ").html_safe
             td
               /- if can? :edit, service
               = link_to text_with_icon('Edit', 'edit'), edit_service_path(service), class: 'btn btn-default btn-xs'
@@ -40,28 +42,31 @@
 javascript:
   var handler = Gmaps.build('Google');
 
-  $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    var markers = [];
 
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      var markers = [];
+    $("table tr.service").each(function (index, row) {
+      var datum = $(row).data(), marker, id = datum.id;
 
-      data.forEach(function (datum, index) {
-        var marker = handler.addMarker(datum),
-            id = datum.id;
+      datum.picture = {
+        url: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=" + (index + 1) + "|FFFFFF|000000",
+        width: 32,
+        height: 32
+      };
 
-        markers.push(marker);
+      marker = handler.addMarker(datum);
+      markers.push(marker);
 
-        marker.getServiceObject().addListener("mouseover", function (point) { 
-          $("tr[data-id=" + id + "]").addClass("success");
-        });
-
-        marker.getServiceObject().addListener("mouseout", function (point) { 
-          $("tr[data-id=" + id + "]").removeClass("success");
-        });
+      marker.getServiceObject().addListener("mouseover", function (point) { 
+        $("tr[data-id=" + id + "]").addClass("success");
       });
 
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
+      marker.getServiceObject().addListener("mouseout", function (point) { 
+        $("tr[data-id=" + id + "]").removeClass("success");
+      });
     });
 
-  })
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+
