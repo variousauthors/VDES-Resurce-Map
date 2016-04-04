@@ -1,31 +1,12 @@
 .map-container
   #map
 
-javascript:
-  var handler = Gmaps.build('Google');
+- index = 0
+- @service_categories.each do |category_name, services|
+  h1
+    = category_name
+  - services.each do |service|
+    .service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
+      = link_to("#{ index + 1 }. #{ service.name }", service_path(service)) + "#{ " *" if service.has_notes? }"
 
-  $.ajax({ url: "#{ services_path(format: :json) }" }).done(function(data) { 
-
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-      var markers = [];
-
-      data.forEach(function (datum, index) {
-        var marker = handler.addMarker(datum),
-            id = datum.id;
-
-        markers.push(marker);
-
-        marker.getServiceObject().addListener("mouseover", function (point) { 
-          $("tr[data-id=" + id + "]").addClass("success");
-        });
-
-        marker.getServiceObject().addListener("mouseout", function (point) { 
-          $("tr[data-id=" + id + "]").removeClass("success");
-        });
-      });
-
-      handler.bounds.extendWith(markers);
-      handler.fitMapToBounds();
-    });
-
-  })
+  - index += 1

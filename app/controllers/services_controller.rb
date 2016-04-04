@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
   end
 
   def print
-    @services = Service.with_location.with_category_name.sort_by(&:name)
+    @service_categories = Service.with_location.with_category_name.sort_by(&:name).group_by(&:category_name)
 
     render layout: "print"
   end

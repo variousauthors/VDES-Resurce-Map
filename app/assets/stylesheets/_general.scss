@@ -49,6 +49,10 @@
             }
 
             @media print {
+                .map-container {
+                    page-break-after: always;
+                }
+
                 img {
                     max-width: none !important;
                 }

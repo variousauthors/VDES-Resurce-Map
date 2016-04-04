@@ -5,7 +5,7 @@ development: &default
   adapter: postgresql
   encoding: unicode
   database: GSWS204_development
-  username: postgres
+  username: zeigfreid
   pool: <%= ENV['DB_POOL'].presence || ENV['MAX_THREADS'].presence || 5 %>
   timeout: 5000
 
