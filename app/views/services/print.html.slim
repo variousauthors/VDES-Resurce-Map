@@ -17,7 +17,7 @@
 
           - services.each do |service|
             - index += 1
-            .row.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
+            .row.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude data-name=service.name }
               .col-print-1
                 strong.index
                   = "#{ index }."

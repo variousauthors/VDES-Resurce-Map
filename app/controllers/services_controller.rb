@@ -109,7 +109,7 @@ class ServicesController < ApplicationController
     end
 
     def sanitize_services(services)
-      black_list = ["WISH Drop-In Centre Society", "Directions: Youth Services Centre", "Spartacus Books", "Main St. and Terminal Ave.", "Translink"]
+      black_list = ["Directions: Youth Services Centre", "Spartacus Books", "Main St. and Terminal Ave.", "Translink"]
 
       services = services.select do |service|
         !black_list.include?(service.name) && !black_list.include?(service.address)
