@@ -2,32 +2,12 @@
 .map-container
   #map
 
-.row
-  - index = 0
-  - @columns.each do |column|
-    .col-print-3
-      - column.each do |category|
-        .service-category
-          - category_name = category[0]
-          - services = category[1]
-
-          h3
-            = category_name
-          - services.each do |service|
-            - index += 1
-            .row.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
-              .col-print-1
-                span
-                  = "#{ index }."
-              .col-print-6
-                div
-                  strong= service.name
-                div
-                  span= service.address
-                div
-                  span= service.phone
-              .col-print-5
-                span
-                  = service.tag_list.map {|tag| image_tag("tags/#{ tag.parameterize.underscore }.jpg", class: "tag_icon", alt: tag, title: tag) }.join(" ").html_safe
-
+.bob
+  - @services.each_with_index do |service, index|
+    .service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
+      = "#{ index + 1 }."
+      = service.name
+      = service.address
+      = service.phone
+      = service.tag_list.map {|tag| image_tag("tags/#{ tag.parameterize.underscore }.jpg", class: "tag_icon", alt: tag, title: tag) }.join(" ").html_safe
 

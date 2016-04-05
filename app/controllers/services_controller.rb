@@ -9,18 +9,7 @@ class ServicesController < ApplicationController
   end
 
   def print
-    categories = Service.with_location.with_category_name.sort_by(&:name).group_by(&:category_name)
-    by_size = categories.map { |k,v| [v.size, k] }
-
-    # columns takes [[1, stuff...], [13, stuff...], [19, stuff], ...]
-    @columns = partition(by_size, 4)
-
-    @columns = @columns.map do |col|
-      col.map do |cat|
-        name = cat[1]
-        [name, categories[name]]
-      end
-    end
+    @services = Service.with_location.with_category_name.sort_by(&:name)
 
     render layout: "print"
   end
