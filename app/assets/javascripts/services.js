@@ -40,6 +40,11 @@ $(function () {
             });
         });
 
+        // maybe do something in here later
+        handler.getMap().addListener('bounds_changed', function () {
+            // console.log(markers.filter(function (m) { return m.isVisible(); }).length);
+        });
+
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
     });
