@@ -51,6 +51,7 @@
     z-index: 1;
 }
 
+
 #services {
 
     .tag_icon {
@@ -59,6 +60,15 @@
     }
 
     &.print {
+        .map-title {
+            @extend .fixed;
+
+            right: 32%;
+            top: 5%;
+            text-align: center;
+            font-family: cursive;
+        }
+
         .row {
             margin-left: 0;
             margin-right: 0;
