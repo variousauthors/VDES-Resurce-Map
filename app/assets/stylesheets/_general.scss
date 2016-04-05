@@ -67,7 +67,7 @@
         .map-legend {
             @extend .fixed;
 
-            bottom: 30%;
+            bottom: 20%;
             left: 5%;
 
             .wish-service {
@@ -98,11 +98,11 @@
         .tag-icons {
             @extend .fixed;
 
-            bottom: 3%;
+            bottom: 5%;
             left: 5%;
             background-color: white;
-            width: 50%;
-            height: 26%;
+            width: 90%;
+            height: 10%;
             border-radius: 10px;
 
             .legend-icons {
@@ -110,10 +110,9 @@
                 .tag-legend {
                     float:left;
                     padding: 5px;
-                    height: 60px;
-                    width: 100px;
-                    font-weight: bolder;
+                    width: 75px;
                     text-align: center;
+                    font-size: 12px;
                 }
             }
         }
