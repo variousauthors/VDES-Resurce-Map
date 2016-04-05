@@ -61,12 +61,16 @@ module ApplicationHelper
 
   def category_icon_name(category)
     case category.downcase
-    when 'shelter'
-      'home'
-    when 'health'
-      'plus'
-    when 'food'
-      'cutlery'
+    when 'health and wellness'
+      'health'
+    when 'community centers and drop-in resources'
+      'community_centre'
+    when 'shelter and resources'
+      'shelter'
+    when 'public toilet'
+      'washroom'
+    else
+      category.downcase
     end
   end
 

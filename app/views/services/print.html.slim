@@ -12,7 +12,9 @@
           - services = category[1]
 
           h4
-            = category_name
+            = "#{ category_name } "
+            = image_tag("tags/#{ category_icon_name(category_name) }.jpg", class: "tag_icon", alt: "", title: category_name)
+
           - services.each do |service|
             - index += 1
             .row.service { data-id=service.id data-lat=service.current_location.latitude data-lng=service.current_location.longitude }
@@ -20,12 +22,14 @@
                 strong.index
                   = "#{ index }."
               .col-print-6
-                div
-                  strong= service.name
+                - if category_name != "Public Toilet"
+                  div
+                    strong= service.name
                 div
                   span= service.address
-                div
-                  span= service.phone
+                - if category_name != "Public Toilet"
+                  div
+                    span= service.phone
               .col-print-5
                 span
                   = service.tag_list.map {|tag| image_tag("tags/#{ tag.parameterize.underscore }.jpg", class: "tag_icon", alt: tag, title: tag) }.join(" ").html_safe

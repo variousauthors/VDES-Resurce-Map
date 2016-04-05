@@ -16,3 +16,8 @@ NEXTSTEPS
 
 [] map should center on DTES regardless of location of dots
    - or map should not show dots outside of DTES
+
+[] filter out the N/A 's
+[] remove WISH (it will be on the cover)
+[] remove tags from anyone with more than 6
+[] make sure services on the pamphlet are those on the map
