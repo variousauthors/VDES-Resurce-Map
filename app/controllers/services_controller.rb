@@ -9,8 +9,11 @@ class ServicesController < ApplicationController
   end
 
   def print
-    categories = Service.with_location.with_category_name.select {|s| s.address != "n/a" }.sort_by(&:name).group_by(&:category_name)
+    services = sanitize_services(Service.with_location.with_category_name).sort_by(&:name)
+
+    categories = services.group_by(&:category_name)
     categories.delete("Other") # TODO this is temporary
+
     by_size = categories.map { |k,v| [v.size, k] }
 
     # columns takes [[1, stuff...], [13, stuff...], [19, stuff], ...]
@@ -103,5 +106,11 @@ class ServicesController < ApplicationController
       end
 
       parts.map {|p| p[1, p.size - 1]}
+    end
+
+    def sanitize_services(services)
+      services.select do |service|
+        service.name != "WISH Drop-In Centre Society" && service.address != "n/a"
+      end
     end
 end
