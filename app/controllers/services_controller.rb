@@ -10,6 +10,7 @@ class ServicesController < ApplicationController
 
   def print
     categories = Service.with_location.with_category_name.sort_by(&:name).group_by(&:category_name)
+    categories.delete("Other") # TODO this is temporary
     by_size = categories.map { |k,v| [v.size, k] }
 
     # columns takes [[1, stuff...], [13, stuff...], [19, stuff], ...]
