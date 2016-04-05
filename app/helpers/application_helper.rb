@@ -63,7 +63,7 @@ module ApplicationHelper
     case category.downcase
     when 'health and wellness'
       'health'
-    when 'community centers and drop-in resources'
+    when 'community centres and drop-in resources'
       'community_centre'
     when 'shelter and resources'
       'shelter'

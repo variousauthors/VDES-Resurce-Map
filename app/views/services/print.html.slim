@@ -27,7 +27,7 @@
                     strong= service.name
                 div
                   span= service.address
-                - if category_name != "Public Toilet"
+                - if service.phone != "555-555-5555"
                   div
                     span= service.phone
               .col-print-5
