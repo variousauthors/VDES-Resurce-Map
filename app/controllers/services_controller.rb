@@ -110,7 +110,7 @@ class ServicesController < ApplicationController
 
     def sanitize_services(services)
       services.select do |service|
-        service.name != "WISH Drop-In Centre Society" && service.address != "n/a"
+        service.name != "WISH Drop-In Centre Society" && service.address != "n/a" && service.address != "N/A"
       end
     end
 end
