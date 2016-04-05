@@ -76,4 +76,27 @@ module ApplicationHelper
     end
   end
 
+  def tag_names
+    [
+      "health",
+      "shower",
+      "clothing",
+      "shelter",
+      "washroom",
+      "women",
+      "dental",
+      "counselling",
+      "pet_food",
+      "storage",
+      "phone",
+      "resources",
+      "advocacy",
+      "transportation",
+      "library",
+      "income",
+      "harm_reduction",
+      "community_centre",
+    ]
+  end
+
 end

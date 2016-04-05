@@ -6,7 +6,36 @@
   h2
     | Resource Map
 
+.map-legend
+  h1
+    | Legend
 
+  .wish-service
+    .logo.float-left
+      = image_tag("WISH_icon.png")
+    .info.float-left
+      strong
+        | Wish Drop-in Centre Society
+      br
+      | 330 Alexander St.
+      br
+      | 604 681 9244
+
+    .tags
+      = image_tag("tags/resources.jpg", class: "tag_icon", alt: "", title: "")
+      = image_tag("tags/food.jpg", class: "tag_icon", alt: "", title: "")
+      = image_tag("tags/women.jpg", class: "tag_icon", alt: "", title: "")
+      = image_tag("tags/counselling.jpg", class: "tag_icon", alt: "", title: "")
+      = image_tag("tags/advocacy.jpg", class: "tag_icon", alt: "", title: "")
+      = image_tag("tags/clothing.jpg", class: "tag_icon", alt: "", title: "")
+
+.tag-icons
+  .legend-icons
+    - tag_names.each do |tag|
+      .tag-legend
+        = image_tag("tags/#{ tag }.jpg", class: "tag_icon", alt: "", title: "")
+        .name
+          = tag.humanize
 
 .map-container
   #map

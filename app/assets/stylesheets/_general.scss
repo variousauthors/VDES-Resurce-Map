@@ -51,6 +51,10 @@
     z-index: 1;
 }
 
+.float-left {
+    float: left;
+}
+
 
 #services {
 
@@ -60,6 +64,28 @@
     }
 
     &.print {
+        .map-legend {
+            @extend .fixed;
+
+            bottom: 30%;
+            left: 5%;
+
+            .wish-service {
+                background-color: white;
+                padding: 5px;
+                border-radius: 10px;
+
+                .info {
+                    margin-right: 20px;
+                }
+
+                .tag_icon {
+                    margin-right: 2px;
+                }
+            }
+
+        }
+
         .map-title {
             @extend .fixed;
 
@@ -67,6 +93,29 @@
             top: 5%;
             text-align: center;
             font-family: cursive;
+        }
+
+        .tag-icons {
+            @extend .fixed;
+
+            bottom: 3%;
+            left: 5%;
+            background-color: white;
+            width: 40%;
+            height: 26%;
+            border-radius: 10px;
+
+            .legend-icons {
+
+                .tag-legend {
+                    float:left;
+                    padding: 5px;
+                    height: 60px;
+                    width: 100px;
+                    font-weight: bolder;
+                    text-align: center;
+                }
+            }
         }
 
         .row {
