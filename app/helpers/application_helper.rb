@@ -69,6 +69,8 @@ module ApplicationHelper
       'shelter'
     when 'public toilet'
       'washroom'
+    when 'phone numbers'
+      'phone'
     else
       category.downcase
     end
