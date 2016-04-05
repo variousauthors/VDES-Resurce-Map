@@ -53,6 +53,7 @@ $(function () {
 
     handler.setOptions({markers: { do_clustering: true }})
     handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+        var sw, ne, dtes;
 
         $(".service").each(function (index, row) {
             var $row = $(row), datum = $row.data(),
@@ -71,8 +72,14 @@ $(function () {
             // console.log(markers.filter(function (m) { return m.isVisible(); }).length);
         });
 
-        handler.bounds.extendWith(markers);
-        handler.fitMapToBounds();
+        sw = { lat: 49.2809577, lng: -123.11294959999998 };
+        ne = { lat: 49.2840793, lng: -123.08914070000003 };
+
+        dtes = new google.maps.LatLngBounds(sw, ne);
+        handler.map.fitToBounds(dtes);
+
     });
+
+
 
 });

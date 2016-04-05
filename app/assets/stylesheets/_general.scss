@@ -42,6 +42,15 @@
     left: 0;
 }
 
+.border {
+    border: solid 2px;
+}
+
+.fixed {
+    position: fixed;
+    z-index: 1;
+}
+
 #services {
 
     .tag_icon {
